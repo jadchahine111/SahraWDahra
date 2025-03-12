@@ -1,11 +1,14 @@
 import { Button } from "@/components/ui/button"
 import PricingPlans from "./components/ui/components/PricingPlans"
+import WhoAreWe from "./components/ui/components/WhoAreWe"
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
+    <Router>
+      <WhoAreWe />
       <PricingPlans />
-    </div>
+      </Router>
   )
 }
 
