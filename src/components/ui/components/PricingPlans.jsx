@@ -88,38 +88,41 @@ export default function PricingPlans() {
                 </div>
                 <p className="text-gray-700">
                   Verified <span className="text-blue-500 font-semibold">blue tick</span> to establish trust and
-                  credibility
+                  credibility.
                 </p>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 mr-3">
                   <Check className="h-5 w-5 text-emerald-500" />
                 </div>
-                <p className="text-gray-700">Updated gallery and menu to attract more customers</p>
+                <p className="text-gray-700">Updated gallery and menu to attract more customers.</p>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 mr-3">
                   <Check className="h-5 w-5 text-emerald-500" />
                 </div>
-                <p className="text-gray-700">Ability to add videos to your profile</p>
+                <p className="text-gray-700">Ability to add videos to your profile.</p>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 mr-3">
                   <Check className="h-5 w-5 text-emerald-500" />
                 </div>
-                <p className="text-gray-700">Access to an exclusive search bar for Premium merchants</p>
+                <p className="text-gray-700">
+                  Access to an exclusive search bar for Premium and Premium Plus merchants, prioritizing your business
+                  in user searches.
+                </p>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 mr-3">
                   <Check className="h-5 w-5 text-emerald-500" />
                 </div>
-                <p className="text-gray-700">Ability to list in multiple categories</p>
+                <p className="text-gray-700">Ability to list in multiple categories (e.g., French, Italian, and International Cuisine).</p>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 mr-3">
                   <Check className="h-5 w-5 text-emerald-500" />
                 </div>
-                <p className="text-gray-700">Boost on Sahra w Dahra's social channels</p>
+                <p className="text-gray-700">Boost on Sahra w Dahra's social channels for increased visibility.</p>
               </div>
             </motion.div>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="mt-8 pt-4">
@@ -157,26 +160,50 @@ export default function PricingPlans() {
                   <Check className="h-5 w-5 text-emerald-500" />
                 </div>
                 <p className="text-gray-700">
-                  Verified <span className="text-[#ffd700] font-semibold">gold tick</span> to signify top-tier status
+                  Verified <span className="text-[#ffd700] font-semibold">gold tick</span> to signify top-tier status.
                 </p>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 mr-3">
                   <Check className="h-5 w-5 text-emerald-500" />
                 </div>
-                <p className="text-gray-700">All features of the Premium Plan</p>
+                <p className="text-gray-700">All features of the Premium Plan.</p>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 mr-3">
                   <Check className="h-5 w-5 text-emerald-500" />
                 </div>
-                <p className="text-gray-700">Collaborative content opportunities to enhance visibility</p>
+                <p className="text-gray-700">Collaborative content opportunities to enhance your visibility.</p>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 mr-3">
                   <Check className="h-5 w-5 text-emerald-500" />
                 </div>
-                <p className="text-gray-700">Ability to feature ads on the platform</p>
+                <p className="text-gray-700">Push notifications sent to end users about offers, events, or updates.</p>
+              </div>
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mr-3">
+                  <Check className="h-5 w-5 text-emerald-500" />
+                </div>
+                <p className="text-gray-700">Dedicated spot in the "Event This Week" section for maximum exposure.</p>
+              </div>
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mr-3">
+                  <Check className="h-5 w-5 text-emerald-500" />
+                </div>
+                <p className="text-gray-700">Access to "SWD Selection" as a premium category, highlighting top-tier stores.</p>
+              </div>
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mr-3">
+                  <Check className="h-5 w-5 text-emerald-500" />
+                </div>
+                <p className="text-gray-700">Enhanced boost on Sahra w Dahra's social channels to drive engagement.</p>
+              </div>
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mr-3">
+                  <Check className="h-5 w-5 text-emerald-500" />
+                </div>
+                <p className="text-gray-700">Monthly detailed report with advanced metrics.</p>
               </div>
             </motion.div>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="mt-8 pt-4">
