@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { Check, CheckCircle, Sparkles, Star } from "lucide-react"
 import { motion } from "framer-motion"
@@ -60,7 +58,7 @@ export default function PricingPlans() {
           <div className="inline-block mb-3 px-4 py-1.5 bg-[#00637C]/10 text-[#00637C] text-sm font-medium rounded-full">
             Flexible Options
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900">Pricing Plans</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[#00637C] ">Pricing Plans</h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
             Choose the perfect plan for your business and start attracting more customers today
           </p>
