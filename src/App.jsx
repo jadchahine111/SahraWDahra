@@ -7,17 +7,19 @@ import WhyChooseUs from "./components/ui/components/WhyChooseUs";
 import CTA from "./components/ui/components/CTA";
 import Hero from "./components/ui/components/Hero";
 import AppBadges from "./components/ui/components/AppBadges";
+import Footer from "./components/ui/components/Footer";
 
 function App() {
   return (
     <Router>
-      <Hero />  
-      <AppBadges />
-      <WhoAreWe />
-      <WhyChooseUs />
-      <PricingPlans />
-      <ContactForm />
-      < CTA />
+        <Hero />  
+        <AppBadges />
+        <WhoAreWe />
+        <WhyChooseUs />
+        <PricingPlans />
+        <ContactForm />
+        < CTA />
+        <Footer />
       </Router>
   )
 }

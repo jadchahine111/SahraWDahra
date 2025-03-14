@@ -267,6 +267,15 @@ export default function Hero() {
         {/* Content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+  className="mb-3 inline-block w-fit rounded-full bg-[#00637C]/50 px-4 py-1.5 text-sm font-medium text-white"
+  initial={{ opacity: 0, y: 10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.3 }}
+>
+  Your guide to Lebanon
+</motion.div>
+
             <motion.h1
               className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
@@ -296,13 +305,13 @@ export default function Hero() {
                 to="/explore" // Changed href to to for react-router-dom
                 className="bg-[#00637C] hover:bg-[#00536A] text-white font-medium py-3 px-8 rounded-full transition-colors duration-300"
               >
-                Start Exploring
+                Check Pricings
               </Link>
               <Link
                 to="/download" // Changed href to to for react-router-dom
                 className="bg-white hover:bg-gray-100 text-[#00637C] font-medium py-3 px-8 rounded-full transition-colors duration-300"
               >
-                Download App
+                Contact Us
               </Link>
             </motion.div>
           </div>
