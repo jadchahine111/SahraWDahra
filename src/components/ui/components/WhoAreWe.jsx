@@ -23,7 +23,7 @@ export default function HeroSection() {
   const isImageInView = useInView(imageRef, { once: true, amount: 0.3 })
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50">
+    <section ref={sectionRef} className="relative overflow-hidden bg-gray-50">
       <div className="container relative z-10 mx-auto px-4 py-8 sm:px-6 sm:py-12 md:py-16">
         {/* Switch to single column on mobile, 5 columns on larger screens */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-5 md:items-center md:gap-4 lg:gap-0">

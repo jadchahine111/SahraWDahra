@@ -40,7 +40,8 @@ export default function CTA() {
   }, [])
 
   return (
-    <div ref={sectionRef} className="w-full bg-white flex items-center justify-center p-4 md:p-8">
+    <div ref={sectionRef}   className="w-full bg-white flex items-center justify-center p-4 md:p-8 mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-24"
+>
       {/* Wrapper to enable the image to overlap */}
       <div className="relative w-full max-w-7xl">
         {/* Right side with phone mockup - only show if screen width >= 873px */}

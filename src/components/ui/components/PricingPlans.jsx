@@ -37,7 +37,7 @@ export default function PricingPlans() {
     <section
       id="pricing-section"
       ref={sectionRef}
-      className="w-full py-16 md:py-24 bg-gradient-to-b from-white to-slate-50 text-gray-800 overflow-hidden relative"
+      className="w-full py-16 md:py-24 bg-gray-50 text-gray-800 overflow-hidden relative"
     >
       {/* Background decorative elements */}
       <div className="absolute top-40 right-0 w-72 h-72 rounded-full bg-[#00637C]/5 blur-3xl"></div>

@@ -169,7 +169,7 @@ export default function ContactForm() {
   ]
 
   return (
-    <section ref={sectionRef} className="bg-gradient-to-b from-white to-slate-50 py-16 md:py-24 mt-16 md:mt-24">
+    <section ref={sectionRef} className="bg-white py-16 md:py-24 mt-16 md:mt-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={headerRef}

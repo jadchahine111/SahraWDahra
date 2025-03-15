@@ -23,7 +23,7 @@ export default function WhyChooseUs() {
   const isItem3InView = useInView(item3Ref, { once: true, amount: 0.5 })
 
   return (
-    <section ref={sectionRef} className="py-16 px-4 md:px-6 lg:px-8">
+    <section ref={sectionRef} className="py-16 px-4 md:px-6 lg:px-8 bg-white to-slate-0">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left side - Image */}
