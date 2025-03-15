@@ -23,7 +23,7 @@ export default function AppBadges() {
             <img
               src="https://play.google.com/intl/en/badges/static/images/badges/en_badge_web_generic.png"
               alt="Get it on Google Play"
-              className="w-40 md:w-48 h-auto"
+              className="w-50 md:w-54 h-auto"
             />
           </motion.a>
 
@@ -39,7 +39,7 @@ export default function AppBadges() {
             <img
               src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"
               alt="Download on the App Store"
-              className="w-36 md:w-44 h-auto"
+              className="w-40 md:w-44 h-auto"
             />
           </motion.a>
         </motion.div>

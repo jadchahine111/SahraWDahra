@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useInView } from "framer-motion"
 import { Link } from "react-router-dom" // Using react-router-dom Link
 import { useRef, useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
@@ -12,6 +12,22 @@ export default function Hero() {
   const [videoError, setVideoError] = useState(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+
+  // Create refs for different sections to animate
+  const sectionRef = useRef(null)
+  const navRef = useRef(null)
+  const badgeRef = useRef(null)
+  const headingRef = useRef(null)
+  const paragraphRef = useRef(null)
+  const buttonsRef = useRef(null)
+
+  // Check if elements are in view
+  const isSectionInView = useInView(sectionRef, { once: true, amount: 0.1 })
+  const isNavInView = useInView(navRef, { once: true, amount: 0.5 })
+  const isBadgeInView = useInView(badgeRef, { once: true, amount: 0.5 })
+  const isHeadingInView = useInView(headingRef, { once: true, amount: 0.5 })
+  const isParagraphInView = useInView(paragraphRef, { once: true, amount: 0.5 })
+  const isButtonsInView = useInView(buttonsRef, { once: true, amount: 0.5 })
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,14 +101,13 @@ export default function Hero() {
     }
   }, [])
 
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
   return (
     <>
-      <section className="relative w-full h-[100vh] overflow-hidden">
+      <section ref={sectionRef} className="relative w-full h-[100vh] overflow-hidden">
         {/* Video Background */}
         <div className="absolute inset-0 w-full h-full">
           {videoError ? (
@@ -130,11 +145,12 @@ export default function Hero() {
 
         {/* Navigation */}
         <motion.nav
+          ref={navRef}
           className={`fixed top-0 left-0 right-0 z-20 w-full transition-all duration-300 ${
             scrolled ? "bg-white shadow-md py-2" : "bg-transparent py-4"
           }`}
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={{ opacity: isNavInView ? 1 : 0, y: isNavInView ? 0 : -20 }}
           transition={{ duration: 0.5 }}
         >
           <div className="container mx-auto px-4">
@@ -267,28 +283,31 @@ export default function Hero() {
         {/* Content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-  className="mb-3 inline-block w-fit rounded-full bg-[#00637C]/50 px-4 py-1.5 text-sm font-medium text-white"
-  initial={{ opacity: 0, y: 10 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.3 }}
->
-  Your guide to Lebanon
-</motion.div>
+            <motion.div
+              ref={badgeRef}
+              className="mb-3 inline-block w-fit rounded-full bg-[#00637C]/50 px-4 py-1.5 text-sm font-medium text-white"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: isBadgeInView ? 1 : 0, y: isBadgeInView ? 0 : 10 }}
+              transition={{ duration: 0.3 }}
+            >
+              Your guide to Lebanon
+            </motion.div>
 
             <motion.h1
+              ref={headingRef}
               className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: isHeadingInView ? 1 : 0, y: isHeadingInView ? 0 : 20 }}
               transition={{ duration: 0.7 }}
             >
               Discover Lebanon's Hidden Gems
             </motion.h1>
 
             <motion.p
+              ref={paragraphRef}
               className="text-lg sm:text-xl md:text-2xl mb-8 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: isParagraphInView ? 1 : 0, y: isParagraphInView ? 0 : 20 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               From breathtaking mountains to pristine beaches, explore the best venues and experiences Lebanon has to
@@ -296,9 +315,10 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
+              ref={buttonsRef}
               className="flex flex-col sm:flex-row gap-4 justify-center"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: isButtonsInView ? 1 : 0, y: isButtonsInView ? 0 : 20 }}
               transition={{ duration: 0.7, delay: 0.4 }}
             >
               <Link

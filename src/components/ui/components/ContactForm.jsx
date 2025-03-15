@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { useRef } from "react"
+import { motion, useInView } from "framer-motion"
 import {
   Phone,
   Mail,
@@ -12,15 +12,16 @@ import {
   Twitter,
   Linkedin,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
 } from "lucide-react"
+import { useState } from "react"
 
 export default function ContactForm() {
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
   })
 
   const [errors, setErrors] = useState({})
@@ -28,18 +29,30 @@ export default function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState(false)
 
-  const handleChange = e => {
+  // Create refs for different sections to animate
+  const sectionRef = useRef(null)
+  const headerRef = useRef(null)
+  const contactInfoRef = useRef(null)
+  const formRef = useRef(null)
+
+  // Check if elements are in view
+  const isSectionInView = useInView(sectionRef, { once: true, amount: 0.1 })
+  const isHeaderInView = useInView(headerRef, { once: true, amount: 0.5 })
+  const isContactInfoInView = useInView(contactInfoRef, { once: true, amount: 0.3 })
+  const isFormInView = useInView(formRef, { once: true, amount: 0.3 })
+
+  const handleChange = (e) => {
     const { name, value } = e.target
-    setFormState(prev => ({
+    setFormState((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }))
 
     // Clear error when user types
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: null
+        [name]: null,
       }))
     }
   }
@@ -69,7 +82,7 @@ export default function ContactForm() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (!validateForm()) return
@@ -78,14 +91,14 @@ export default function ContactForm() {
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      await new Promise((resolve) => setTimeout(resolve, 1500))
 
       // Reset form
       setFormState({
         name: "",
         email: "",
         subject: "",
-        message: ""
+        message: "",
       })
 
       setIsSubmitted(true)
@@ -102,9 +115,9 @@ export default function ContactForm() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   }
 
   const itemVariants = {
@@ -112,77 +125,56 @@ export default function ContactForm() {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.5 }
-    }
+      transition: { duration: 0.5 },
+    },
   }
 
   const socialVariants = {
     hidden: { scale: 0, opacity: 0 },
-    visible: custom => ({
+    visible: (custom) => ({
       scale: 1,
       opacity: 1,
       transition: {
         delay: 0.3 + custom * 0.1,
         type: "spring",
         stiffness: 260,
-        damping: 20
-      }
-    })
+        damping: 20,
+      },
+    }),
   }
 
   const contactInfoItems = [
     {
       icon: <Phone className="h-5 w-5" />,
       title: "Phone",
-      details: ["+961 1 234 567", "+961 70 123 456"]
+      details: ["+961 1 234 567", "+961 70 123 456"],
     },
     {
       icon: <Mail className="h-5 w-5" />,
       title: "Email",
-      details: ["contact@sahrawdahra.com", "support@sahrawdahra.com"]
+      details: ["contact@sahrawdahra.com", "support@sahrawdahra.com"],
     },
     {
       icon: <MapPin className="h-5 w-5" />,
       title: "Address",
-      details: ["Beirut, Lebanon", "Digital District, Floor 3"]
-    }
+      details: ["Beirut, Lebanon", "Digital District, Floor 3"],
+    },
   ]
-
-    const [isVisible, setIsVisible] = useState(false)
-  
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true)
-          }
-        },
-        { threshold: 0.1 },
-      )
-  
-      const section = document.getElementById("pricing-section")
-      if (section) observer.observe(section)
-  
-      return () => {
-        if (section) observer.unobserve(section)
-      }
-    }, [])
-  
-
 
   const socialLinks = [
     { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram" },
     { icon: <Facebook className="h-5 w-5" />, href: "#", label: "Facebook" },
     { icon: <Twitter className="h-5 w-5" />, href: "#", label: "Twitter" },
-    { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" }
+    { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" },
   ]
 
   return (
-    <section className="bg-gradient-to-b from-white to-slate-50 py-16 md:py-24">
+    <section ref={sectionRef} className="bg-gradient-to-b from-white to-slate-50 py-16 md:py-24 mt-16 md:mt-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <motion.div
+        <motion.div
+          ref={headerRef}
           initial={{ opacity: 0, y: 20 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: isHeaderInView ? 1 : 0, y: isHeaderInView ? 0 : 20 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12 md:mb-16"
         >
@@ -191,38 +183,32 @@ export default function ContactForm() {
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[#00637C] ">Get in Touch</h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-          Have questions about Sahra w Dahra? We'd love to hear from you. Fill out the form below and we'll get back
-          to you as soon as possible.          </p>
+            Have questions about Sahra w Dahra? We'd love to hear from you. Fill out the form below and we'll get back
+            to you as soon as possible.
+          </p>
         </motion.div>
 
         <div className="mx-auto max-w-6xl rounded-2xl bg-white p-4 shadow-xl sm:p-6 lg:p-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
             {/* Contact Information - Left Side */}
             <motion.div
+              ref={contactInfoRef}
               className="rounded-xl bg-[#00637C] p-6 text-white lg:col-span-2"
               variants={containerVariants}
               initial="hidden"
-              animate="visible"
+              animate={isContactInfoInView ? "visible" : "hidden"}
             >
-              <motion.h3
-                className="mb-6 text-2xl font-bold"
-                variants={itemVariants}
-              >
+              <motion.h3 className="mb-6 text-2xl font-bold" variants={itemVariants}>
                 Contact Information
               </motion.h3>
 
               <motion.p className="mb-8 text-[#E0F2F7]" variants={itemVariants}>
-                Reach out to us through any of these channels and we'll respond
-                as quickly as possible.
+                Reach out to us through any of these channels and we'll respond as quickly as possible.
               </motion.p>
 
               <div className="space-y-6">
                 {contactInfoItems.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-start"
-                    variants={itemVariants}
-                  >
+                  <motion.div key={index} className="flex items-start" variants={itemVariants}>
                     <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#E0F2F7]/20">
                       {item.icon}
                     </div>
@@ -238,10 +224,7 @@ export default function ContactForm() {
                 ))}
               </div>
 
-              <motion.div
-                className="mt-12 flex space-x-4"
-                variants={itemVariants}
-              >
+              <motion.div className="mt-12 flex space-x-4" variants={itemVariants}>
                 {socialLinks.map((social, index) => (
                   <motion.a
                     key={index}
@@ -261,9 +244,10 @@ export default function ContactForm() {
 
             {/* Contact Form - Right Side */}
             <motion.div
+              ref={formRef}
               className="lg:col-span-3"
               initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              animate={{ opacity: isFormInView ? 1 : 0, x: isFormInView ? 0 : 20 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               {isSubmitted ? (
@@ -280,18 +264,15 @@ export default function ContactForm() {
                       type: "spring",
                       stiffness: 260,
                       damping: 20,
-                      delay: 0.2
+                      delay: 0.2,
                     }}
                     className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-green-600"
                   >
                     <CheckCircle className="h-10 w-10" />
                   </motion.div>
-                  <h3 className="mb-2 text-2xl font-bold text-[#00637C]">
-                    Thank You!
-                  </h3>
+                  <h3 className="mb-2 text-2xl font-bold text-[#00637C]">Thank You!</h3>
                   <p className="mb-6 text-slate-600">
-                    Your message has been sent successfully. We'll get back to
-                    you soon.
+                    Your message has been sent successfully. We'll get back to you soon.
                   </p>
                   <button
                     onClick={() => setIsSubmitted(false)}
@@ -305,13 +286,10 @@ export default function ContactForm() {
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 10 }}
                       transition={{ duration: 0.3, delay: 0.1 }}
                     >
-                      <label
-                        htmlFor="name"
-                        className="mb-2 block text-sm font-medium text-slate-700"
-                      >
+                      <label htmlFor="name" className="mb-2 block text-sm font-medium text-slate-700">
                         Full Name
                       </label>
                       <input
@@ -325,22 +303,15 @@ export default function ContactForm() {
                         } px-4 py-3 text-slate-900 focus:border-[#00637C] focus:outline-none focus:ring-1 focus:ring-[#00637C]`}
                         placeholder="Your name"
                       />
-                      {errors.name && (
-                        <p className="mt-1 text-sm text-red-500">
-                          {errors.name}
-                        </p>
-                      )}
+                      {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
                     </motion.div>
 
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 10 }}
                       transition={{ duration: 0.3, delay: 0.2 }}
                     >
-                      <label
-                        htmlFor="email"
-                        className="mb-2 block text-sm font-medium text-slate-700"
-                      >
+                      <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">
                         Email Address
                       </label>
                       <input
@@ -354,23 +325,16 @@ export default function ContactForm() {
                         } px-4 py-3 text-slate-900 focus:border-[#00637C] focus:outline-none focus:ring-1 focus:ring-[#00637C]`}
                         placeholder="your.email@example.com"
                       />
-                      {errors.email && (
-                        <p className="mt-1 text-sm text-red-500">
-                          {errors.email}
-                        </p>
-                      )}
+                      {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
                     </motion.div>
                   </div>
 
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 10 }}
                     transition={{ duration: 0.3, delay: 0.3 }}
                   >
-                    <label
-                      htmlFor="subject"
-                      className="mb-2 block text-sm font-medium text-slate-700"
-                    >
+                    <label htmlFor="subject" className="mb-2 block text-sm font-medium text-slate-700">
                       Subject
                     </label>
                     <input
@@ -384,22 +348,15 @@ export default function ContactForm() {
                       } px-4 py-3 text-slate-900 focus:border-[#00637C] focus:outline-none focus:ring-1 focus:ring-[#00637C]`}
                       placeholder="How can we help you?"
                     />
-                    {errors.subject && (
-                      <p className="mt-1 text-sm text-red-500">
-                        {errors.subject}
-                      </p>
-                    )}
+                    {errors.subject && <p className="mt-1 text-sm text-red-500">{errors.subject}</p>}
                   </motion.div>
 
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 10 }}
                     transition={{ duration: 0.3, delay: 0.4 }}
                   >
-                    <label
-                      htmlFor="message"
-                      className="mb-2 block text-sm font-medium text-slate-700"
-                    >
+                    <label htmlFor="message" className="mb-2 block text-sm font-medium text-slate-700">
                       Message
                     </label>
                     <textarea
@@ -413,11 +370,7 @@ export default function ContactForm() {
                       } px-4 py-3 text-slate-900 focus:border-[#00637C] focus:outline-none focus:ring-1 focus:ring-[#00637C]`}
                       placeholder="Your message here..."
                     ></textarea>
-                    {errors.message && (
-                      <p className="mt-1 text-sm text-red-500">
-                        {errors.message}
-                      </p>
-                    )}
+                    {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
                   </motion.div>
 
                   {submitError && (
@@ -428,17 +381,14 @@ export default function ContactForm() {
                     >
                       <div className="flex">
                         <AlertCircle className="mr-2 h-5 w-5" />
-                        <p>
-                          There was an error sending your message. Please try
-                          again.
-                        </p>
+                        <p>There was an error sending your message. Please try again.</p>
                       </div>
                     </motion.div>
                   )}
 
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 10 }}
                     transition={{ duration: 0.3, delay: 0.5 }}
                     className="flex justify-end"
                   >
@@ -490,3 +440,4 @@ export default function ContactForm() {
     </section>
   )
 }
+

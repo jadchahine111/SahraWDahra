@@ -1,27 +1,21 @@
-import { useState, useEffect } from "react"
+"use client"
+
+import { useRef } from "react"
 import { Check, CheckCircle, Sparkles, Star } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 
 export default function PricingPlans() {
-  const [isVisible, setIsVisible] = useState(false)
+  // Create refs for different sections
+  const sectionRef = useRef(null)
+  const headerRef = useRef(null)
+  const plansRef = useRef(null)
+  const footerRef = useRef(null)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 },
-    )
-
-    const section = document.getElementById("pricing-section")
-    if (section) observer.observe(section)
-
-    return () => {
-      if (section) observer.unobserve(section)
-    }
-  }, [])
+  // Check if elements are in view
+  const isSectionInView = useInView(sectionRef, { once: true, amount: 0.1 })
+  const isHeaderInView = useInView(headerRef, { once: true, amount: 0.5 })
+  const isPlansInView = useInView(plansRef, { once: true, amount: 0.2 })
+  const isFooterInView = useInView(footerRef, { once: true, amount: 0.5 })
 
   const container = {
     hidden: { opacity: 0 },
@@ -42,6 +36,7 @@ export default function PricingPlans() {
   return (
     <section
       id="pricing-section"
+      ref={sectionRef}
       className="w-full py-16 md:py-24 bg-gradient-to-b from-white to-slate-50 text-gray-800 overflow-hidden relative"
     >
       {/* Background decorative elements */}
@@ -50,13 +45,14 @@ export default function PricingPlans() {
 
       <div className="container px-4 md:px-6 mx-auto max-w-6xl relative z-10">
         <motion.div
+          ref={headerRef}
           initial={{ opacity: 0, y: 20 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12 md:mb-16"
         >
           <div className="inline-block mb-3 px-4 py-1.5 bg-[#00637C]/10 text-[#00637C] text-sm font-medium rounded-full">
-            Flexible Options
+            Pricing
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[#00637C] ">Pricing Plans</h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
@@ -65,9 +61,10 @@ export default function PricingPlans() {
         </motion.div>
 
         <motion.div
+          ref={plansRef}
           variants={container}
           initial="hidden"
-          animate={isVisible ? "show" : "hidden"}
+          animate={isPlansInView ? "show" : "hidden"}
           className="grid md:grid-cols-2 gap-6 lg:gap-8"
         >
           {/* Premium Plan */}
@@ -98,7 +95,7 @@ export default function PricingPlans() {
 
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={isPlansInView ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
                 className="space-y-3.5 flex-grow"
               >
@@ -193,7 +190,7 @@ export default function PricingPlans() {
 
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={isPlansInView ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
                 className="space-y-3.5 flex-grow"
               >
@@ -266,9 +263,10 @@ export default function PricingPlans() {
 
         {/* FAQ or additional info */}
         <motion.div
+          ref={footerRef}
           initial={{ opacity: 0, y: 20 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
+          animate={isFooterInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-16 text-center"
         >
           <p className="text-sm text-gray-500 max-w-2xl mx-auto">

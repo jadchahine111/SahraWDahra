@@ -17,10 +17,7 @@ export default function Footer() {
           >
             {/* Replace with your actual logo */}
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <span className="text-[#00637C] font-bold text-xl">L</span>
-              </div>
-              <span className="text-xl font-bold">Lebanon Spots</span>
+              <img src="/Footer.png" alt="" />
             </div>
 
             <p className="text-sm text-gray-100 mb-6 max-w-md">
@@ -104,7 +101,7 @@ export default function Footer() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <p>© {new Date().getFullYear()} Lebanon Spots. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Sahra W Dahra. All rights reserved.</p>
           <div className="mt-2 flex justify-center space-x-4">
             <Link href="/privacy-policy" className="hover:underline">
               Privacy Policy
