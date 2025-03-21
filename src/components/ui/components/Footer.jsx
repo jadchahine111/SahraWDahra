@@ -102,14 +102,6 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <p>© {new Date().getFullYear()} Sahra W Dahra. All rights reserved.</p>
-          <div className="mt-2 flex justify-center space-x-4">
-            <Link href="/privacy-policy" className="hover:underline">
-              Privacy Policy
-            </Link>
-            <Link href="/terms-of-service" className="hover:underline">
-              Terms of Service
-            </Link>
-          </div>
         </motion.div>
       </div>
     </footer>

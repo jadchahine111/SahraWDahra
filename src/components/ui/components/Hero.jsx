@@ -12,6 +12,7 @@ export default function Hero() {
   const [videoError, setVideoError] = useState(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState("home")
 
   // Create refs for different sections to animate
   const sectionRef = useRef(null)
@@ -28,6 +29,39 @@ export default function Hero() {
   const isHeadingInView = useInView(headingRef, { once: true, amount: 0.5 })
   const isParagraphInView = useInView(paragraphRef, { once: true, amount: 0.5 })
   const isButtonsInView = useInView(buttonsRef, { once: true, amount: 0.5 })
+
+  // Track which section is in view for navbar highlighting
+  useEffect(() => {
+    const sections = document.querySelectorAll("section[id]")
+
+    const checkActiveSection = () => {
+      const scrollY = window.scrollY
+
+      sections.forEach((section) => {
+        const sectionId = section.getAttribute("id")
+        const sectionHeight = section.offsetHeight
+        const sectionTop = section.offsetTop - 100 // Offset for navbar height
+
+        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+          setActiveSection(sectionId)
+        }
+      })
+
+      // If we're at the top of the page, set home as active
+      if (scrollY < 100) {
+        setActiveSection("home")
+      }
+    }
+
+    window.addEventListener("scroll", checkActiveSection)
+
+    // Check on initial load
+    checkActiveSection()
+
+    return () => {
+      window.removeEventListener("scroll", checkActiveSection)
+    }
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,9 +139,59 @@ export default function Hero() {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  // Custom NavLink component with animated underline
+  const NavLink = ({ to, section, children }) => {
+    const isActive = activeSection === section
+
+    return (
+      <Link
+        to={to}
+        className={`${
+          scrolled ? "text-gray-800" : "text-white"
+        } hover:text-[#00637C] transition-colors duration-200 relative py-2`}
+      >
+        {children}
+        {/* Animated underline */}
+        {isActive && (
+          <motion.div
+            className="absolute bottom-0 left-0 h-0.5 bg-[#00637C] w-full"
+            initial={{ width: 0 }}
+            animate={{ width: "100%" }}
+            transition={{ duration: 0.3 }}
+          />
+        )}
+      </Link>
+    )
+  }
+
+  // Mobile NavLink component
+  const MobileNavLink = ({ to, section, children, onClick }) => {
+    const isActive = activeSection === section
+
+    return (
+      <Link
+        to={to}
+        className="text-white hover:text-gray-300 transition-colors duration-200 py-2 relative"
+        onClick={onClick}
+      >
+        <div className="flex items-center justify-between">
+          <span>{children}</span>
+          {isActive && (
+            <motion.div
+              className="h-0.5 bg-white w-2"
+              initial={{ width: 0 }}
+              animate={{ width: "8px" }}
+              transition={{ duration: 0.3 }}
+            />
+          )}
+        </div>
+      </Link>
+    )
+  }
+
   return (
     <>
-      <section ref={sectionRef} className="relative w-full h-[100vh] overflow-hidden">
+      <section ref={sectionRef} id="home" className="relative w-full h-[100vh] overflow-hidden">
         {/* Video Background */}
         <div className="absolute inset-0 w-full h-full">
           {videoError ? (
@@ -168,36 +252,21 @@ export default function Hero() {
 
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center space-x-8">
-                <Link
-                  to="/"
-                  className={`${scrolled ? "text-gray-800" : "text-white"} hover:text-[#00637C] transition-colors duration-200`}
-                >
+                <NavLink to="/" section="home">
                   Home
-                </Link>
-                <Link
-                  to="/about"
-                  className={`${scrolled ? "text-gray-800" : "text-white"} hover:text-[#00637C] transition-colors duration-200`}
-                >
+                </NavLink>
+                <NavLink to="/about" section="about">
                   About
-                </Link>
-                <Link
-                  to="/why-choose-us"
-                  className={`${scrolled ? "text-gray-800" : "text-white"} hover:text-[#00637C] transition-colors duration-200`}
-                >
+                </NavLink>
+                <NavLink to="/why-choose-us" section="why-choose-us">
                   Why Choose Us
-                </Link>
-                <Link
-                  to="/pricing"
-                  className={`${scrolled ? "text-gray-800" : "text-white"} hover:text-[#00637C] transition-colors duration-200`}
-                >
+                </NavLink>
+                <NavLink to="/pricing" section="pricing">
                   Pricing
-                </Link>
-                <Link
-                  to="/contact"
-                  className={`${scrolled ? "text-gray-800" : "text-white"} hover:text-[#00637C] transition-colors duration-200`}
-                >
+                </NavLink>
+                <NavLink to="/contact" section="contact">
                   Contact
-                </Link>
+                </NavLink>
               </div>
 
               {/* Mobile Menu Button */}
@@ -208,9 +277,9 @@ export default function Hero() {
               >
                 <motion.div initial={false} animate={{ rotate: isMenuOpen ? 90 : 0 }} transition={{ duration: 0.3 }}>
                   {isMenuOpen ? (
-                    <X size={24} className="text-[#00637C]" />
+                    <X size={24} className={scrolled ? "text-[#00637C]" : "text-white"} />
                   ) : (
-                    <Menu size={24} className="text-[#00637C]" />
+                    <Menu size={24} className={scrolled ? "text-[#00637C]" : "text-white"} />
                   )}
                 </motion.div>
               </button>
@@ -238,41 +307,21 @@ export default function Hero() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2, delay: 0.1 }}
                   >
-                    <Link
-                      to="/"
-                      className="text-white hover:text-gray-300 transition-colors duration-200 py-2"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
+                    <MobileNavLink to="/" section="home" onClick={() => setIsMenuOpen(false)}>
                       Home
-                    </Link>
-                    <Link
-                      to="/about"
-                      className="text-white hover:text-gray-300 transition-colors duration-200 py-2"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
+                    </MobileNavLink>
+                    <MobileNavLink to="/about" section="about" onClick={() => setIsMenuOpen(false)}>
                       About
-                    </Link>
-                    <Link
-                      to="/why-choose-us"
-                      className="text-white hover:text-gray-300 transition-colors duration-200 py-2"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
+                    </MobileNavLink>
+                    <MobileNavLink to="/why-choose-us" section="why-choose-us" onClick={() => setIsMenuOpen(false)}>
                       Why Choose Us
-                    </Link>
-                    <Link
-                      to="/pricing"
-                      className="text-white hover:text-gray-300 transition-colors duration-200 py-2"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
+                    </MobileNavLink>
+                    <MobileNavLink to="/pricing" section="pricing" onClick={() => setIsMenuOpen(false)}>
                       Pricing
-                    </Link>
-                    <Link
-                      to="/contact"
-                      className="text-white hover:text-gray-300 transition-colors duration-200 py-2"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
+                    </MobileNavLink>
+                    <MobileNavLink to="/contact" section="contact" onClick={() => setIsMenuOpen(false)}>
                       Contact
-                    </Link>
+                    </MobileNavLink>
                   </motion.div>
                 </div>
               </motion.div>
@@ -322,13 +371,13 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.4 }}
             >
               <Link
-                to="/explore" // Changed href to to for react-router-dom
+                to="/pricing"
                 className="bg-[#00637C] hover:bg-[#00536A] text-white font-medium py-3 px-8 rounded-full transition-colors duration-300"
               >
                 Check Pricings
               </Link>
               <Link
-                to="/download" // Changed href to to for react-router-dom
+                to="/contact"
                 className="bg-white hover:bg-gray-100 text-[#00637C] font-medium py-3 px-8 rounded-full transition-colors duration-300"
               >
                 Contact Us

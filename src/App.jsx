@@ -13,11 +13,19 @@ function App() {
   return (
     <Router>
         <Hero />  
-        <AppBadges />
+          <AppBadges />
+        <section id="about">
         <WhoAreWe />
+        </section>
+        <section id="why-choose-us">
         <WhyChooseUs />
+        </section>
+        <section id="pricing">
         <PricingPlans />
+        </section>
+        <section id="contact">
         <ContactForm />
+        </section>
         < CTA />
         <Footer />
       </Router>
