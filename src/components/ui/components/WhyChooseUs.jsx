@@ -100,15 +100,15 @@ export default function WhyChooseUs() {
                 Why Choose Us?
               </motion.div>
 
-              <motion.h1
+              <motion.h2
                 ref={headingRef}
-                className="text-2xl font-bold leading-tight tracking-tight text-[#00637C] sm:text-3xl md:text-4xl lg:text-5xl"
-                initial={{ opacity: 0, y: 20 }}
+                className="text-3xl sm:text-3xl md:text-5xl font-bold mb-4 text-[#00637C]"
+                               initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: isHeadingInView ? 1 : 0, y: isHeadingInView ? 0 : 20 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 Why List Your Business on Sahra w Dahra?
-              </motion.h1>
+              </motion.h2>
             </motion.div>
 
             {/* Timeline items container */}

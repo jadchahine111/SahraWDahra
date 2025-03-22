@@ -1,7 +1,6 @@
 "use client"
 
 import { motion, AnimatePresence, useInView } from "framer-motion"
-import { Link } from "react-router-dom" // Using react-router-dom Link
 import { useRef, useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 
@@ -139,13 +138,25 @@ export default function Hero() {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  // Function to handle smooth scrolling to section
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId)
+    if (section) {
+      window.scrollTo({
+        top: section.offsetTop - 80, // Offset for header
+        behavior: "smooth",
+      })
+      setIsMenuOpen(false) // Close mobile menu after clicking
+    }
+  }
+
   // Custom NavLink component with animated underline
-  const NavLink = ({ to, section, children }) => {
+  const NavLink = ({ section, children }) => {
     const isActive = activeSection === section
 
     return (
-      <Link
-        to={to}
+      <button
+        onClick={() => scrollToSection(section)}
         className={`${
           scrolled ? "text-gray-800" : "text-white"
         } hover:text-[#00637C] transition-colors duration-200 relative py-2`}
@@ -160,19 +171,21 @@ export default function Hero() {
             transition={{ duration: 0.3 }}
           />
         )}
-      </Link>
+      </button>
     )
   }
 
   // Mobile NavLink component
-  const MobileNavLink = ({ to, section, children, onClick }) => {
+  const MobileNavLink = ({ section, children, onClick }) => {
     const isActive = activeSection === section
 
     return (
-      <Link
-        to={to}
-        className="text-white hover:text-gray-300 transition-colors duration-200 py-2 relative"
-        onClick={onClick}
+      <button
+        onClick={() => {
+          scrollToSection(section)
+          onClick && onClick()
+        }}
+        className="text-white hover:text-gray-300 transition-colors duration-200 py-2 relative w-full text-left"
       >
         <div className="flex items-center justify-between">
           <span>{children}</span>
@@ -185,7 +198,7 @@ export default function Hero() {
             />
           )}
         </div>
-      </Link>
+      </button>
     )
   }
 
@@ -240,7 +253,14 @@ export default function Hero() {
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between">
               {/* Logo */}
-              <Link to="/" className="flex items-center">
+              <a 
+                href="#" 
+                onClick={(e) => {
+                  e.preventDefault()
+                  scrollToSection("home")
+                }}
+                className="flex items-center"
+              >
                 <div className="flex items-center space-x-2">
                   <img
                     src="/logo.png"
@@ -248,23 +268,23 @@ export default function Hero() {
                     className="w-12 h-auto sm:w-14 md:w-16 lg:w-20 xl:w-18 object-contain"
                   />
                 </div>
-              </Link>
+              </a>
 
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center space-x-8">
-                <NavLink to="/" section="home">
+                <NavLink section="home">
                   Home
                 </NavLink>
-                <NavLink to="/about" section="about">
+                <NavLink section="about">
                   About
                 </NavLink>
-                <NavLink to="/why-choose-us" section="why-choose-us">
+                <NavLink section="why-choose-us">
                   Why Choose Us
                 </NavLink>
-                <NavLink to="/pricing" section="pricing">
+                <NavLink section="pricing">
                   Pricing
                 </NavLink>
-                <NavLink to="/contact" section="contact">
+                <NavLink section="contact">
                   Contact
                 </NavLink>
               </div>
@@ -307,19 +327,19 @@ export default function Hero() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2, delay: 0.1 }}
                   >
-                    <MobileNavLink to="/" section="home" onClick={() => setIsMenuOpen(false)}>
+                    <MobileNavLink section="home" onClick={() => setIsMenuOpen(false)}>
                       Home
                     </MobileNavLink>
-                    <MobileNavLink to="/about" section="about" onClick={() => setIsMenuOpen(false)}>
+                    <MobileNavLink section="about" onClick={() => setIsMenuOpen(false)}>
                       About
                     </MobileNavLink>
-                    <MobileNavLink to="/why-choose-us" section="why-choose-us" onClick={() => setIsMenuOpen(false)}>
+                    <MobileNavLink section="why-choose-us" onClick={() => setIsMenuOpen(false)}>
                       Why Choose Us
                     </MobileNavLink>
-                    <MobileNavLink to="/pricing" section="pricing" onClick={() => setIsMenuOpen(false)}>
+                    <MobileNavLink section="pricing" onClick={() => setIsMenuOpen(false)}>
                       Pricing
                     </MobileNavLink>
-                    <MobileNavLink to="/contact" section="contact" onClick={() => setIsMenuOpen(false)}>
+                    <MobileNavLink section="contact" onClick={() => setIsMenuOpen(false)}>
                       Contact
                     </MobileNavLink>
                   </motion.div>
@@ -370,18 +390,18 @@ export default function Hero() {
               animate={{ opacity: isButtonsInView ? 1 : 0, y: isButtonsInView ? 0 : 20 }}
               transition={{ duration: 0.7, delay: 0.4 }}
             >
-              <Link
-                to="/pricing"
+              <button
+                onClick={() => scrollToSection("pricing")}
                 className="bg-[#00637C] hover:bg-[#00536A] text-white font-medium py-3 px-8 rounded-full transition-colors duration-300"
               >
                 Check Pricings
-              </Link>
-              <Link
-                to="/contact"
+              </button>
+              <button
+                onClick={() => scrollToSection("contact")}
                 className="bg-white hover:bg-gray-100 text-[#00637C] font-medium py-3 px-8 rounded-full transition-colors duration-300"
               >
                 Contact Us
-              </Link>
+              </button>
             </motion.div>
           </div>
         </div>
@@ -389,4 +409,3 @@ export default function Hero() {
     </>
   )
 }
-
