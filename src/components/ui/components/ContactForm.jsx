@@ -15,6 +15,7 @@ import {
   AlertCircle,
 } from "lucide-react"
 import { useState } from "react"
+import axios from "axios";
 
 export default function ContactForm() {
   const [formState, setFormState] = useState({
@@ -82,34 +83,41 @@ export default function ContactForm() {
     return Object.keys(newErrors).length === 0
   }
 
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    if (!validateForm()) return
-
-    setIsSubmitting(true)
-
+    e.preventDefault();
+  
+    if (!validateForm()) return;
+  
+    setIsSubmitting(true);
+  
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
-      // Reset form
+      const response = await axios.post("https://formsubmit.co/info@sahrawdahra.com", {
+        name: formState.name,
+        email: formState.email,
+        subject: formState.subject,
+        message: formState.message,
+      });
+  
+      if (response.status !== 200) throw new Error("Form submission failed");
+  
+      // Reset form on successful submission
       setFormState({
         name: "",
         email: "",
         subject: "",
         message: "",
-      })
-
-      setIsSubmitted(true)
-      setSubmitError(false)
+      });
+  
+      setIsSubmitted(true);
+      setSubmitError(false);
     } catch (error) {
-      setSubmitError(true)
+      setSubmitError(true);
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
-
+  };
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -152,7 +160,7 @@ export default function ContactForm() {
     {
       icon: <Mail className="h-5 w-5" />,
       title: "Email",
-      details: ["contact@sahrawdahra.com", "support@sahrawdahra.com"],
+      details: ["info@sahrawdahra.com"],
     },
     {
       icon: <MapPin className="h-5 w-5" />,

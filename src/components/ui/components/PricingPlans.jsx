@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { Check, CheckCircle, Sparkles, Star } from "lucide-react"
+import { Check, CheckCircle, Sparkles, Star, FileText } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 
 export default function PricingPlans() {
@@ -43,7 +43,7 @@ export default function PricingPlans() {
       <div className="absolute top-40 right-0 w-72 h-72 rounded-full bg-[#00637C]/5 blur-3xl"></div>
       <div className="absolute bottom-20 left-10 w-80 h-80 rounded-full bg-[#ffd700]/5 blur-3xl"></div>
 
-      <div className="container px-4 md:px-6 mx-auto max-w-6xl relative z-10">
+      <div className="container px-4 md:px-6 mx-auto max-w-7xl relative z-10">
         <motion.div
           ref={headerRef}
           initial={{ opacity: 0, y: 20 }}
@@ -65,23 +65,97 @@ export default function PricingPlans() {
           variants={container}
           initial="hidden"
           animate={isPlansInView ? "show" : "hidden"}
-          className="grid md:grid-cols-2 gap-6 lg:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 w-full"
         >
+          {/* Regular Plan (Free) */}
+          <motion.div
+            variants={item}
+            className="relative flex flex-col h-full w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:shadow-gray-400/10 hover:border-gray-300 group"
+          >
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-gray-400 to-gray-300"></div>
+            <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gray-200/5 blur-3xl group-hover:bg-gray-200/10 transition-all duration-500"></div>
+
+            <div className="p-4 sm:p-6 md:p-8 flex flex-col h-full">
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center">
+                  <div className="mr-3 rounded-full bg-gray-100 p-2">
+                    <FileText className="h-6 w-6 text-gray-500" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Regular Plan</h3>
+                </div>
+                <div className="px-3 py-1 rounded-full bg-gray-100 text-xs font-medium text-gray-600">Free</div>
+              </div>
+
+              <div className="flex items-baseline mb-6">
+                <span className="text-3xl sm:text-4xl font-bold text-gray-900">$0</span>
+                <span className="ml-1 text-gray-500">/month</span>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isPlansInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="space-y-3.5 flex-grow"
+              >
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mr-3 mt-1">
+                    <Check className="h-4 w-4 text-emerald-500" />
+                  </div>
+                  <p className="text-gray-700 text-sm sm:text-base">One photo in your business profile</p>
+                </div>
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mr-3 mt-1">
+                    <Check className="h-4 w-4 text-emerald-500" />
+                  </div>
+                  <p className="text-gray-700 text-sm sm:text-base">Basic menu display (not necessarily updated)</p>
+                </div>
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mr-3 mt-1">
+                    <Check className="h-4 w-4 text-emerald-500" />
+                  </div>
+                  <p className="text-gray-700 text-sm sm:text-base">Listed in 1 category only</p>
+                </div>
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mr-3 mt-1">
+                    <Check className="h-4 w-4 text-emerald-500" />
+                  </div>
+                  <p className="text-gray-700 text-sm sm:text-base">Seasonal reports with basic metrics</p>
+                </div>
+
+                {/* Spacer to ensure equal height */}
+                <div className="hidden md:block">
+                  <div className="h-[160px]"></div>
+                </div>
+              </motion.div>
+
+              <div className="mt-8">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-3 px-4 rounded-lg bg-gray-200 text-gray-700 font-medium transition-all hover:bg-gray-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 flex items-center justify-center"
+                >
+                  <span>Get Started</span>
+                </motion.button>
+                <p className="text-xs text-center text-gray-500 mt-3">No registration required</p>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Premium Plan */}
           <motion.div
             variants={item}
-            className="relative flex flex-col h-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:shadow-[#00637C]/10 hover:border-[#00637C]/30 group"
+            className="relative flex flex-col h-full w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:shadow-[#00637C]/10 hover:border-[#00637C]/30 group"
           >
             <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#00637C] to-[#00637C]/50"></div>
             <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#00637C]/5 blur-3xl group-hover:bg-[#00637C]/10 transition-all duration-500"></div>
 
-            <div className="p-6 sm:p-8 flex flex-col h-full">
+            <div className="p-4 sm:p-6 md:p-8 flex flex-col h-full">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center">
                   <div className="mr-3 rounded-full bg-[#00637C]/10 p-2">
                     <CheckCircle className="h-6 w-6 text-[#00637C]" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Premium Plan</h3>
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Premium Plan</h3>
                 </div>
                 <div className="px-3 py-1 rounded-full bg-[#00637C]/5 text-xs font-medium text-[#00637C]">
                   Most Popular
@@ -142,11 +216,6 @@ export default function PricingPlans() {
                   </div>
                   <p className="text-gray-700 text-sm sm:text-base">Boost on Sahra w Dahra's social channels</p>
                 </div>
-
-                {/* Spacer to ensure equal height */}
-                <div className="hidden md:block">
-                  <div className="h-[88px]"></div>
-                </div>
               </motion.div>
 
               <div className="mt-8">
@@ -165,18 +234,18 @@ export default function PricingPlans() {
           {/* Premium Plus Plan */}
           <motion.div
             variants={item}
-            className="relative flex flex-col h-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:shadow-[#ffd700]/10 hover:border-[#ffd700]/30 group"
+            className="relative flex flex-col h-full w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:shadow-[#ffd700]/10 hover:border-[#ffd700]/30 group sm:col-span-2 xl:col-span-1 sm:max-w-md sm:mx-auto xl:max-w-none xl:mx-0"
           >
             <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#ffd700] to-[#ffc800]/50"></div>
             <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#ffd700]/5 blur-3xl group-hover:bg-[#ffd700]/10 transition-all duration-500"></div>
 
-            <div className="p-6 sm:p-8 flex flex-col h-full">
+            <div className="p-4 sm:p-6 md:p-8 flex flex-col h-full">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center">
                   <div className="mr-3 rounded-full bg-[#ffd700]/20 p-2">
                     <Star className="h-6 w-6 text-[#ffd700]" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Premium Plus</h3>
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Premium Plus</h3>
                 </div>
                 <div className="px-3 py-1 rounded-full bg-[#ffd700]/10 text-xs font-medium text-[#ffd700]">
                   Best Value

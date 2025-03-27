@@ -138,7 +138,8 @@ export default function Footer() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <p>© {new Date().getFullYear()} Sahra W Dahra. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Sahra W Dahra. All rights reserved.</p> 
+          <p>Developed by <a href="https://devloopmint.com/" class="underline">Devloopmint</a></p>
         </motion.div>
       </div>
       
